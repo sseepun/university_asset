@@ -4,11 +4,6 @@ const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 /*
   level :
     1  = User
-    10 = Home Owner
-    15 = Agency
-    20 = Company Owner
-
-    90 = Internal
     98 = Admin
     99 = Super Admin
 */

@@ -8,6 +8,9 @@ exports.initial = async () => {
     let count = 0;
     const data = [
       {
+        condition: { level: 1 },
+        data: { name: 'User', level: 1, isDefault: 1 }
+      }, {
         condition: { level: 98 },
         data: { name: 'Admin', level: 98, isDefault: 0 }
       }, {

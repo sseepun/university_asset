@@ -11,8 +11,6 @@ const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 const User = mongoose.model(
   'user',
   new mongoose.Schema({
-    type: { type: String, default: '' },
-
     role: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user_role',

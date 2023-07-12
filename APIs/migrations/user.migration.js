@@ -7,7 +7,6 @@ exports.initial = async () => {
     console.log('');
     console.log('Installation - Users');
     let count = 0;
-    const userRoleInternal = await db.UserRole.findOne({ level: 90 }).select('_id');
     const userRoleAdmin = await db.UserRole.findOne({ level: 98 }).select('_id');
     const userRoleSuperAdmin = await db.UserRole.findOne({ level: 99 }).select('_id');
 
