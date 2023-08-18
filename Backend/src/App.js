@@ -58,6 +58,17 @@ function App() {
             <Route path="/admin/profile/update" 
               element={<ProtectedRoute auth={GuardAdmin()} 
               element={lazy(() => import('./views/admin/ProfilePage'))} />} />
+
+            {/* Asset */}
+            <Route path="/admin/asset-categories" 
+              element={<ProtectedRoute auth={GuardAdmin()} 
+              element={lazy(() => import('./views/admin/AssetCategoriesPage'))} />} />
+            {/* <Route path="/admin/asset-category/view/:dataId" 
+              element={<ProtectedRoute auth={GuardAdmin()} 
+              element={lazy(() => import('./views/admin/AssetCategoryViewPage'))} />} /> */}
+            <Route path="/admin/asset-category/:process/*" 
+              element={<ProtectedRoute auth={GuardAdmin()} 
+              element={lazy(() => import('./views/admin/AssetCategoryPage'))} />} />
             {/* END: Admin ***************************************************************** */}
 
 

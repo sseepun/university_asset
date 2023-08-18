@@ -5,7 +5,6 @@ const { resProcess, utility } = require('../../helpers');
 
 module.exports = {
 
-  // START: User
   userList : async (req, res) => {
     try {
       const { paginate, dataFilter } = req.body;
@@ -451,6 +450,5 @@ module.exports = {
       return resProcess['500'](res, err);
     }
   },
-  // END: User
 
 };

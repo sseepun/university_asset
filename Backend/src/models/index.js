@@ -7,3 +7,5 @@ export * from './file.model';
 
 export * from './user-role.model';
 export * from './user.model';
+
+export * from './asset-category.model';

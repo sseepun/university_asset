@@ -17,3 +17,8 @@ export const ALERT_LOADING = 'alert/loading';
 export const USER_SIGNIN = 'user/signin';
 export const USER_SIGNOUT = 'user/signout';
 export const USER_UPDATE = 'user/update';
+
+
+// Asset
+export const ASSET_CATEGORIES = 'asset/categories';
+export const ASSET_ASSETS = 'asset/assets';

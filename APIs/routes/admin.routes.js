@@ -63,5 +63,34 @@ module.exports = function(app) {
   // END: User
 
 
+  // START: Asset
+  router.post(
+    '/asset-categories',
+    [ authJwt.verifyToken, authJwt.isAdmin ],
+    AdminController.assetCategoryList
+  );
+  router.get(
+    '/asset-category',
+    [ authJwt.verifyToken, authJwt.isAdmin ],
+    AdminController.assetCategoryRead
+  );
+  router.post(
+    '/asset-category',
+    [ authJwt.verifyToken, authJwt.isAdmin ],
+    AdminController.assetCategoryCreate
+  );
+  router.patch(
+    '/asset-category',
+    [ authJwt.verifyToken, authJwt.isAdmin ],
+    AdminController.assetCategoryUpdate
+  );
+  router.delete(
+    '/asset-category',
+    [ authJwt.verifyToken, authJwt.isAdmin ],
+    AdminController.assetCategoryDelete
+  );
+  // END: Asset
+
+
   app.use('/admin', router);
 };

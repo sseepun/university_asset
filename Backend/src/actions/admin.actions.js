@@ -3,14 +3,17 @@ import { apiHeader } from '../helpers/header';
 import { API_URL } from './variables';
 import {
   APP_USERS,
+  ASSET_CATEGORIES,
 } from './types';
 import {
   PaginateModel, UserModel,
+  AssetCategoryModel,
 } from '../models';
 
 
 export const processClear = (type) => (dispatch) => {
   if(type === 'users') dispatch({ type: APP_USERS, payload: [] });
+  else if(type === 'asset-categories') dispatch({ type: ASSET_CATEGORIES, payload: [] });
 };
 
 
@@ -38,6 +41,9 @@ export const processList = (type, input={}, loading=false) => async (dispatch) =
       if(type === 'users'){
         res.result = data1.data.result.map(d => new UserModel(d));
         dispatch({ type: APP_USERS, payload: res.result });
+      }else if(type === 'asset-categories'){
+        res.result = data1.data.result.map(d => new AssetCategoryModel(d));
+        dispatch({ type: ASSET_CATEGORIES, payload: res.result });
       }else if(isExport){
         if(data1.data.fileName){
           res.result = `${API_URL}frontend/download/${data1.data.fileName}`;
@@ -78,6 +84,8 @@ export const processRead = (type, input={}, loading=false) => async (dispatch) =
       let result = null;
       if(type === 'user'){
         result = new UserModel(data1.data.result);
+      }else if(type === 'asset-category'){
+        result = new AssetCategoryModel(data1.data.result);
       }else{
         result = data1.data.result;
       }

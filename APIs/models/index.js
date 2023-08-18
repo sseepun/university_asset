@@ -12,5 +12,7 @@ db.UserRole = require('./user-role.model');
 db.User = require('./user.model');
 db.UserTemp = require('./user-temp.model');
 
+db.AssetCategory = require('./asset-category.model');
+
 
 module.exports = db;

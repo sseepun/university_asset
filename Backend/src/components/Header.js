@@ -62,6 +62,13 @@ function Header(props) {
                 { title: 'Dashboard', to: '/admin', activeIndex: 1, icon: 'fa-solid fa-chart-simple' },
                 { title: 'Admins', to: '/admin/admins', activeIndex: 2, icon: 'fa-solid fa-users' },
               ]
+            }, {
+              title: 'Asset',
+              activeIndexes: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+              children: [
+                { title: 'Categories', to: '/admin/asset-categories', activeIndex: 21, icon: 'fa-solid fa-chart-simple' },
+                { title: 'Assets', to: '/admin/assets', activeIndex: 22, icon: 'fa-solid fa-users' },
+              ]
             },
           ];
         }

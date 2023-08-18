@@ -11,7 +11,8 @@ const formater = {
   },
   
   cleanTelephone: (val) => {
-    return val.replace(/^0/, '+66').replaceAll('-', '');
+    if(!val) return '';
+    else return val.replace(/^0/, '+66').replace(/-/g, '');
   },
   cleanKeyword: (val) => {
     return `${val}`.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
