@@ -147,16 +147,16 @@ function AssetCategoryPage(props) {
             <div className="btns">
               {['create', 'update'].indexOf(process) > -1? (
                 <button type="submit" className="btn btn-action btn-p">
-                  {process === 'create'? 'สร้าง': 'แก้ไข'}
+                  {process==='create'? 'สร้าง': 'แก้ไข'}ข้อมูล
                 </button>
               ): (<></>)}
               {process === 'update'? (
                 <Link to={`/admin/asset-category/view/${dataId}`} className="btn btn-action btn-p-border">
-                  ดู
+                  ดูข้อมูล
                 </Link>
               ): (<></>)}
               <Link to="/admin/asset-categories" className="btn btn-action btn-default">
-                ลบ
+                ย้อนกลับ
               </Link>
             </div>
           </div>

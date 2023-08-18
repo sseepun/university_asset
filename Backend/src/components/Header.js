@@ -61,6 +61,7 @@ function Header(props) {
               children: [
                 { title: 'Dashboard', to: '/admin', activeIndex: 1, icon: 'fa-solid fa-chart-simple' },
                 { title: 'Admins', to: '/admin/admins', activeIndex: 2, icon: 'fa-solid fa-users' },
+                { title: 'Users', to: '/admin/users', activeIndex: 3, icon: 'fa-solid fa-users' },
               ]
             }, {
               title: 'Asset',
@@ -68,6 +69,16 @@ function Header(props) {
               children: [
                 { title: 'Categories', to: '/admin/asset-categories', activeIndex: 21, icon: 'fa-solid fa-chart-simple' },
                 { title: 'Assets', to: '/admin/assets', activeIndex: 22, icon: 'fa-solid fa-users' },
+              ]
+            },
+          ];
+        }else if(u.isUser()){
+          temp = [
+            {
+              title: 'User',
+              activeIndexes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+              children: [
+                { title: 'Dashboard', to: '/user', activeIndex: 1, icon: 'fa-solid fa-chart-simple' },
               ]
             },
           ];

@@ -51,6 +51,16 @@ function App() {
               element={<ProtectedRoute auth={GuardSuperAdmin()} 
               element={lazy(() => import('./views/admin/AdminPage'))} />} />
             
+            <Route path="/admin/users" 
+              element={<ProtectedRoute auth={GuardAdmin()} 
+              element={lazy(() => import('./views/admin/UsersPage'))} />} />
+            {/* <Route path="/admin/user/view/:dataId" 
+              element={<ProtectedRoute auth={GuardAdmin()} 
+              element={lazy(() => import('./views/admin/UserViewPage'))} />} /> */}
+            <Route path="/admin/user/:process/*" 
+              element={<ProtectedRoute auth={GuardSuperAdmin()} 
+              element={lazy(() => import('./views/admin/UserPage'))} />} />
+            
             {/* Personal */}
             <Route path="/admin/profile" 
               element={<ProtectedRoute auth={GuardAdmin()} 
@@ -70,6 +80,17 @@ function App() {
               element={<ProtectedRoute auth={GuardAdmin()} 
               element={lazy(() => import('./views/admin/AssetCategoryPage'))} />} />
             {/* END: Admin ***************************************************************** */}
+            
+
+            {/* START: User **************************************************************** */}
+            {/* User */}
+            <Route path="/user" 
+              element={<ProtectedRoute auth={GuardUser()} 
+              element={lazy(() => import('./views/user/DashboardPage'))} />} />
+            <Route path="/user/dashboard" 
+              element={<ProtectedRoute auth={GuardUser()} 
+              element={lazy(() => import('./views/user/DashboardPage'))} />} />
+            {/* END: User ****************************************************************** */}
 
 
             <Route path="/admin/coming-soon/*" element={<AuthComingSoonPage />} />
@@ -157,6 +178,15 @@ const GuardAdmin = () => {
   if(!user) return false;
   user = new UserModel(JSON.parse(user));
   if(!user.isAdmin()) {
+    return false;
+  }
+  return true;
+};
+const GuardUser = () => {
+  let user = localStorage.getItem(`${APP_PREFIX}_USER`);
+  if(!user) return false;
+  user = new UserModel(JSON.parse(user));
+  if(!user.isUser()) {
     return false;
   }
   return true;

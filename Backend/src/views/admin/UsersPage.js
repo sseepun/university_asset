@@ -9,15 +9,12 @@ import Footer from '../../components/Footer';
 import { connect } from 'react-redux';
 import { setSidenavActiveIndex } from '../../actions/app.actions';
 import { processClear, processList, processDelete } from '../../actions/admin.actions';
-import { UserModel, PaginateModel } from '../../models';
+import { PaginateModel } from '../../models';
 
-
-function AdminsPage(props) {
-  const user = new UserModel(props.user);
-
+function UsersPage(props) {
   const tableRef = useRef(null);
 
-  const [dataFilter, setDataFilter] = useState({ keywords: '', status: '', levels: [ 98, 99 ] });
+  const [dataFilter, setDataFilter] = useState({ keywords: '', status: '', levels: [ 1 ] });
   const onChangeDataFilter = (key, val, isNumber=false) => {
     if(isNumber) val = val || [0, -1].indexOf(val) > -1? Number(val): '';
     setDataFilter({ ...dataFilter, [key]: val });
@@ -49,7 +46,7 @@ function AdminsPage(props) {
     props.processClear('users');
     let res = await props.processList('users', {
       paginate: listPaginate? listPaginate: paginate,
-      dataFilter: dataFilter
+      dataFilter: dataFilter,
     }, true);
     setPaginate(res.paginate);
     setLoading(false);
@@ -73,7 +70,7 @@ function AdminsPage(props) {
 
 
   /* eslint-disable */
-	useEffect(() => { onMounted(); props.setSidenavActiveIndex(2); }, []);
+	useEffect(() => { onMounted(); props.setSidenavActiveIndex(3); }, []);
 	useEffect(() => { onLoadData(null, paginate); }, []);
   /* eslint-enable */
 
@@ -81,10 +78,10 @@ function AdminsPage(props) {
     <>
       <div className="app-container">
         <Breadcrumb 
-          title="Admin Management" 
+          title="User Management" 
           structure={[
             { title: 'Admin', to: '/admin' },
-            { title: 'Admin Management', to: '/admin/admins' }
+            { title: 'User Management', to: '/admin/users' }
           ]}
         />
 
@@ -129,14 +126,11 @@ function AdminsPage(props) {
                   </button>
                 </div>
               </div>
-              {user.isSuperAdmin()? (
-                <div className="grid xs-50 sm-50 md-30 lg-25 text-right">
-                  <Link to="/admin/admin/create" className="btn btn-action btn-info">
-                    <em className="fa-solid fa-plus mr-2"></em>
-                    สร้าง
-                  </Link>
-                </div>
-              ): (<></>)}
+              <div className="grid xs-50 sm-50 md-30 lg-25 text-right">
+                <Link to="/admin/user/create" className="btn btn-action btn-info">
+                  <em className="fa-solid fa-plus mr-2"></em> สร้าง
+                </Link>
+              </div>
             </div>
           </form>
           <div className="table-wrapper pt-4">
@@ -170,7 +164,7 @@ function AdminsPage(props) {
                           </div>
                         </td>
                         <td className="ws-nowrap">
-                          <Link to={`/admin/admin/view/${d._id}`} className="h-color-p">
+                          <Link to={`/admin/user/view/${d._id}`} className="h-color-p">
                             {d.displayName()}
                           </Link>
                         </td>
@@ -179,19 +173,15 @@ function AdminsPage(props) {
                         <td className="ws-nowrap">{d.role.isValid()? d.role.name: '-'}</td>
                         <td className="text-center">{d.displayStatus()}</td>
                         <td className="text-center">
-                          <Link to={`/admin/admin/view/${d._id}`} className="table-option color-info">
+                          <Link to={`/admin/user/view/${d._id}`} className="table-option color-info">
                             <em className="fa-regular fa-eye"></em>
                           </Link>
-                          {user.isSuperAdmin() && !d.isSuperAdmin()? (
-                            <>
-                              <Link to={`/admin/admin/update/${d._id}`} className="table-option color-success">
-                                <em className="fa-regular fa-pen-to-square"></em>
-                              </Link>
-                              <span onClick={e => onModalToggle(e, d)} className="table-option color-danger">
-                                <em className="fa-regular fa-trash-can"></em>
-                              </span>
-                            </>
-                          ): (<></>)}
+                          <Link to={`/admin/user/update/${d._id}`} className="table-option color-success">
+                            <em className="fa-regular fa-pen-to-square"></em>
+                          </Link>
+                          <span onClick={e => onModalToggle(e, d)} className="table-option color-danger">
+                            <em className="fa-regular fa-trash-can"></em>
+                          </span>
                         </td>
                       </tr>
                     ))
@@ -212,61 +202,58 @@ function AdminsPage(props) {
         <Footer />
       </div>
 
-      {user.isSuperAdmin()? (
-        <div className={`popup-container ${selectedData? 'active': ''}`}>
-          <div className="wrapper">
-            <div className="popup-box">
-              <div className="popup-header">
-                <h6 className="fw-600 lh-xs">ยืนยันการลบข้อมูล</h6>
-                <div className="btn-close" onClick={onModalToggle}>
-                  <div className="hamburger active">
-                    <div></div><div></div><div></div>
-                  </div>
+      <div className={`popup-container ${selectedData? 'active': ''}`}>
+        <div className="wrapper">
+          <div className="popup-box">
+            <div className="popup-header">
+              <h6 className="fw-600 lh-xs">ยืนยันการลบข้อมูล</h6>
+              <div className="btn-close" onClick={onModalToggle}>
+                <div className="hamburger active">
+                  <div></div><div></div><div></div>
                 </div>
               </div>
-              <form onSubmit={onSubmitDelete}>
-                <div className="popup-body">
-                  <p className="fw-500">
-                    กรุณายืนยันการลบข้อมูล ข้อมูลไม่สามารถนำกลับมาได้หลังจากถูกลบไปแล้ว
-                  </p>
-                </div>
-                <div className="popup-footer">
-                  <div className="btns mt-0">
-                    <button type="submit" className="btn btn-action btn-p">
-                      ยืนยันการลบ
-                    </button>
-                    <button type="button" className="btn btn-action btn-default" onClick={onModalToggle}>
-                      ปิด
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
+            <form onSubmit={onSubmitDelete}>
+              <div className="popup-body">
+                <p className="fw-500">
+                  กรุณายืนยันการลบข้อมูล ข้อมูลไม่สามารถนำกลับมาได้หลังจากถูกลบไปแล้ว
+                </p>
+              </div>
+              <div className="popup-footer">
+                <div className="btns mt-0">
+                  <button type="submit" className="btn btn-action btn-p">
+                    ยืนยันการลบ
+                  </button>
+                  <button type="button" className="btn btn-action btn-default" onClick={onModalToggle}>
+                    ปิด
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      ): (<></>)}
+      </div>
     </>
   );
 }
 
-AdminsPage.defaultProps = {
+UsersPage.defaultProps = {
 	
 };
-AdminsPage.propTypes = {
+UsersPage.propTypes = {
 	setSidenavActiveIndex: PropTypes.func.isRequired,
   processClear: PropTypes.func.isRequired,
   processList: PropTypes.func.isRequired,
-  processDelete: PropTypes.func.isRequired
+  processDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-	user: state.user.user,
-  list: state.app.users
+  list: state.app.users,
 });
 
 export default connect(mapStateToProps, {
   setSidenavActiveIndex: setSidenavActiveIndex,
   processClear: processClear,
   processList: processList,
-  processDelete: processDelete
-})(AdminsPage);
+  processDelete: processDelete,
+})(UsersPage);
